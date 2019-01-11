@@ -1,0 +1,41 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>E-Commerce</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h2>E-Commerce / Panier (<span th:text="${panier.montantTotal}"></span> €)</h2>
+	<a href="/commande/passer">Passer la commande</a> <a href="/produits">Lister les produits</a> <a href="/panier/vider" style="float:right">Vider le panier</a>
+	<p th:if="errorMessage != null" th:text="${errorMessage}" style="color:red"></p>
+	<hr>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Nom</th>
+				<th>Prix unitaire</th>
+				<th>Quntité</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr th:each="ligne : *{panier.lignes}">
+				<td th:text="${ligne.produit.code}"></td>
+				<td th:text="${ligne.produit.nom}"></td>
+				<td th:text="${ligne.produit.prixUnitaire}"></td>
+				<td th:text="${ligne.quantite}"></td>
+				<td>
+					<a th:href="@{/panier/update-quantite-produit/{id}/{quantite}(id = ${ligne.produit.id}, quantite = ${ligne.quantite + 1})}">Aug.</a>
+					<a th:href="@{/panier/remove-produit/{id}(id = ${ligne.produit.id})}">Retirer</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

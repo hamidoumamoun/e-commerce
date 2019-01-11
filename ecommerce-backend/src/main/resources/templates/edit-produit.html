@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>E-Commerce</title>
+	</head>
+	<body>
+		<h2>Ajout d'un produit</h2>
+		<hr>
+		<th:block th:if="${error != null}"><span th:text="${error}" style="color:red"></span></th:block>
+		<form th:action="${action}" method="POST">
+			Code: <input name="code" th:value="${produit.code}">
+			Nom: <input name="nom"  th:value="${produit.nom}">
+			Prix Unitaire: <input name="prixUnitaire"  th:value="${produit.prixUnitaire}">
+			Quantite: <input name="quantite"  th:value="${produit.quantite}">
+			<button type="submit">Ajouter</button>
+		</form>
+	</body>
+</html>
