@@ -1,0 +1,67 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>E-Commerce</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h2>
+		E-Commerce / Commande (N° <span th:text="${commande.id}"></span>
+		<small>
+			<th:block th:switch="${commande.status.name()}">
+				<span th:case="'TO_VALIDATE'" style="color: blue"> A valider</span>
+				<span th:case="'VALIDATING'" style="color: orange"> En cours de validation</span>
+				<span th:case="'VALIDATED'" style="color: green"> Validée</span>
+				<span th:case="'CANCELED'"  style="color: red"> Annulée</span>
+			</th:block>
+		</small>
+		)
+	</h2> 
+	<a href="/produits">Lister les produits</a>
+	
+	<th:block th:switch="${commande.status.name()}">
+		<span th:case="'TO_VALIDATE'"> 
+			<a th:href="@{/commande/traiter/{id}(id = ${commande.id})}" style="color: orange">Traiter</a> 
+			<a th:href="@{/commande/annuler/{id}(id = ${commande.id})}" style="color: red">Annuler</a>
+		</span>
+		<span th:case="'VALIDATING'" > 
+			<a th:href="@{/commande/valider/{id}(id = ${commande.id})}" style="color: blue">Valider</a> 
+			<a th:href="@{/commande/annuler/{id}(id = ${commande.id})}" style="color: red">Annuler</a>
+		</span>
+	</th:block>
+			
+	<p th:if="successMessage != null" th:text="${successMessage}" style="color: green"></p>
+	<p th:if="errorMessage != null" th:text="${errorMessage}" style="color:red"></p>
+	<hr>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Nom</th>
+				<th>Prix unitaire</th>
+				<th>Quntité</th>
+				<th>Montant</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="ligne : *{commande.lignes}">
+				<td th:text="${ligne.produit.code}"></td>
+				<td th:text="${ligne.produit.nom}"></td>
+				<td th:text="${ligne.produit.prixUnitaire}"></td>
+				<td th:text="${ligne.quantite}"></td>
+				<td th:text="${ligne.quantite * ligne.produit.prixUnitaire}"></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="4" style="text-align: right">Total</td>
+				<td><span th:text="${commande.montant}"></span>€</td>
+			</tr>
+		</tfoot>
+	</table>
+
+</body>
+</html>

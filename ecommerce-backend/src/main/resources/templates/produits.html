@@ -1,0 +1,44 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>E-Commerce</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h2>E-Commerce</h2>
+	<hr>
+
+	<a href="/new-produit">Ajouter un produit</a>
+	<a href="/panier">Affichier le panier</a>
+	<table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Code</th>
+				<th>Nom</th>
+				<th>Prix unitaire</th>
+				<th>Quntité</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr th:each="produit : *{produits}">
+				<td th:text="${produit.id}"></td>
+				<td th:text="${produit.code}"></td>
+				<td th:text="${produit.nom}"></td>
+				<td th:text="${produit.prixUnitaire}"></td>
+				<td th:text="${produit.quantite}"></td>
+				<td>
+					<a th:href="@{/edit-produit/{id}(id = ${produit.id})}">Mod.</a>
+					<a th:href="@{/delete-produit/{id}(id = ${produit.id})}">Supp.</a>
+					<a th:href="@{/panier/add-produit/{id}/1(id = ${produit.id})}">Add Panier.</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
